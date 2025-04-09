@@ -1,78 +1,55 @@
-import React, { useState } from 'react';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-} from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Card,
-  Container,
-  Flex,
-  Grid,
-  Heading,
-  Text,
-  Inset,
-} from '@radix-ui/themes';
-import { ConnectButton, useCurrentAccount } from '@mysten/dapp-kit';
+// Copyright (c), Mysten Labs, Inc.
+// SPDX-License-Identifier: Apache-2.0
 
+import React from 'react';
+import { ConnectButton, useCurrentAccount } from '@mysten/dapp-kit';
+import { Box, Button, Card, Container, Flex, Grid } from '@radix-ui/themes';
 import { CreateAllowlist } from './CreateAllowlist';
 import { Allowlist } from './Allowlist';
 import WalrusUpload from './EncryptAndUpload';
+import { useState } from 'react';
 import { CreateService } from './CreateSubscriptionService';
 import FeedsToSubscribe from './SubscriptionView';
 import { Service } from './SubscriptionService';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { AllAllowlist } from './OwnedAllowlists';
 import { AllServices } from './OwnedSubscriptionServices';
 import Feeds from './AllowlistView';
 
 function LandingPage() {
   return (
-    <Grid columns={{ initial: '1', md: '2' }} gap="4">
-      <Card size="3" style={{ backgroundColor: '#1e1e2f', color: 'white' }}>
-        <Flex direction="column" gap="3" align="center">
-          <Heading size="4" align="center">TRY Allowlist</Heading>
-          <Box>
-            <Text as="ol" size="2">
-              <li>Click "Try it"</li>
-              <li>Create Your Name Allow List</li>
-              <li>Add New Wallets</li>
-              <li>Select Values service</li>
-              <li>Upload file</li>
-              <li>Click "Encrypt and Upload to Walrus"</li>
-              <li>Click "Associate file to Sui object"</li>
-              <li>Done</li>
-            </Text>
-          </Box>
+    <Grid columns="2" gap="4">
+      <Card>
+        <Flex direction="column" gap="2" align="center" style={{ height: '100%' }}>
+          <div style={{ textAlign: 'center' }}>
+            <h2>Allowlist Example</h2>
+            <p>
+              Shows how a creator can define an allowlist based access. The creator first creates an
+              allowlist and can add or remove users in the list. The creator can then associate
+              encrypted files to the allowlist. Only users in the allowlist have access to decrypt
+              the files.
+            </p>
+          </div>
           <Link to="/allowlist-example">
-            <Button size="3" variant="solid" color="blue">
-              Try it
-            </Button>
+            <Button size="3">Try it</Button>
           </Link>
         </Flex>
       </Card>
-
-      <Card size="3" style={{ backgroundColor: '#1e1e2f', color: 'white' }}>
-        <Flex direction="column" gap="3" align="center">
-          <Heading size="4" align="center">TRY Subscription</Heading>
-          <Box>
-            <Text as="ol" size="2">
-              <li>Click "Try it"</li>
-              <li>Enter Price in MIST</li>
-              <li>Set duration in minutes</li>
-              <li>Name the service</li>
-              <li>Click Create Service</li>
-              <li>Upload & Encrypt</li>
-              <li>Associate file to subscription</li>
-              <li>Done</li>
-            </Text>
-          </Box>
+      <Card>
+        <Flex direction="column" gap="2" align="center" style={{ height: '100%' }}>
+          <div style={{ textAlign: 'center' }}>
+            <h2>Subscription Example</h2>
+            <p>
+              Shows how a creator can define a subscription based access to its published files. The
+              creator defines subcription fee and how long a subscription is valid for. The creator
+              can then associate encrypted files to the service. Only users who have purchased a
+              subscription (NFT) have access to decrypt the files, along with the condition that the
+              subscription must not have expired (i.e. the subscription creation timestamp plus the
+              TTL is smaller than the current clock time).
+            </p>
+          </div>
           <Link to="/subscription-example">
-            <Button size="3" variant="solid" color="blue">
-              Try it
-            </Button>
+            <Button size="3">Try it</Button>
           </Link>
         </Flex>
       </Card>
@@ -82,127 +59,103 @@ function LandingPage() {
 
 function App() {
   const currentAccount = useCurrentAccount();
-  const [recipientAllowlist, setRecipientAllowlist] = useState('');
-  const [capId, setCapId] = useState('');
-
+  const [recipientAllowlist, setRecipientAllowlist] = useState<string>('');
+  const [capId, setCapId] = useState<string>('');
   return (
-    <Box style={{ backgroundColor: '#121212', minHeight: '100vh', color: 'white' }}>
-      <Container py="5">
-        <Flex direction="column" align="center" gap="4">
-          <img
-            src="/logo.png"
-            alt="Logo"
-            style={{ width: '80px', height: '80px', borderRadius: '50%' }}
-          />
-          <Heading size="6" align="center">
-            Fakenode Seal Testnet
-          </Heading>
-          <Flex gap="3">
-            <a href="https://twitter.com" target="_blank">
-              <img src="/twitter-icon.svg" width={24} />
-            </a>
-            <a href="https://t.me" target="_blank">
-              <img src="/telegram-icon.svg" width={24} />
-            </a>
-            <a href="https://youtube.com" target="_blank">
-              <img src="/youtube-icon.svg" width={24} />
-            </a>
-          </Flex>
+    <Container>
+      <Flex position="sticky" px="4" py="2" justify="between">
+        <h1 className="text-4xl font-bold m-4 mb-8">Seal Example Apps</h1>
+        {/* <p>TODO: add seal logo</p> */}
+        <Box>
           <ConnectButton />
-        </Flex>
-
-        <Inset side="top" my="4">
-          <Card>
-            <Text size="2">
-              1. Code available at{' '}
-              <a href="https://github.com/fakenode139/gensyn-testnet" target="_blank">
-                GitHub
-              </a>
-              .
-              <br />
-              2. Make sure your wallet is set to Testnet and has some SUI from{' '}
-              <a href="https://faucet.sui.io/" target="_blank">
-                faucet.sui.io
-              </a>
-              .
-              <br />
-              3. Files stored on Walrus Testnet are temporary and expire quickly.
-            </Text>
-          </Card>
-        </Inset>
-
-        {currentAccount ? (
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route
-                path="/allowlist-example/*"
-                element={
-                  <Routes>
-                    <Route path="/" element={<CreateAllowlist />} />
-                    <Route
-                      path="/admin/allowlist/:id"
-                      element={
-                        <Box>
-                          <Allowlist
-                            setRecipientAllowlist={setRecipientAllowlist}
-                            setCapId={setCapId}
-                          />
-                          <WalrusUpload
-                            policyObject={recipientAllowlist}
-                            cap_id={capId}
-                            moduleName="allowlist"
-                          />
-                        </Box>
-                      }
-                    />
-                    <Route path="/admin/allowlists" element={<AllAllowlist />} />
-                    <Route
-                      path="/view/allowlist/:id"
-                      element={<Feeds suiAddress={currentAccount.address} />}
-                    />
-                  </Routes>
-                }
-              />
-              <Route
-                path="/subscription-example/*"
-                element={
-                  <Routes>
-                    <Route path="/" element={<CreateService />} />
-                    <Route
-                      path="/admin/service/:id"
-                      element={
-                        <Box>
-                          <Service
-                            setRecipientAllowlist={setRecipientAllowlist}
-                            setCapId={setCapId}
-                          />
-                          <WalrusUpload
-                            policyObject={recipientAllowlist}
-                            cap_id={capId}
-                            moduleName="subscription"
-                          />
-                        </Box>
-                      }
-                    />
-                    <Route path="/admin/services" element={<AllServices />} />
-                    <Route
-                      path="/view/service/:id"
-                      element={<FeedsToSubscribe suiAddress={currentAccount.address} />}
-                    />
-                  </Routes>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
-        ) : (
-          <Flex justify="center" mt="4">
-            <Text size="3">Please connect your wallet to continue</Text>
-          </Flex>
-        )}
-      </Container>
-    </Box>
+        </Box>
+      </Flex>
+      <Card style={{ marginBottom: '2rem' }}>
+        <p>
+          1. Code is available{' '}
+          <a href="https://github.com/MystenLabs/seal/tree/main/examples">here</a>.
+        </p>
+        <p>
+          2. These examples are for Testnet only. Make sure you wallet is set to Testnet and has
+          some balance (can request from <a href="https://faucet.sui.io/">faucet.sui.io</a>).
+        </p>
+        <p>
+          3. Blobs are only stored on Walrus Testnet for 1 epoch by default, older files cannot be
+          retrieved even if you have access.
+        </p>
+        <p>
+          4. Currently only image files are supported, and the UI is minimal, designed for demo
+          purposes only!
+        </p>
+      </Card>
+      {currentAccount ? (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/allowlist-example/*"
+              element={
+                <Routes>
+                  <Route path="/" element={<CreateAllowlist />} />
+                  <Route
+                    path="/admin/allowlist/:id"
+                    element={
+                      <div>
+                        <Allowlist
+                          setRecipientAllowlist={setRecipientAllowlist}
+                          setCapId={setCapId}
+                        />
+                        <WalrusUpload
+                          policyObject={recipientAllowlist}
+                          cap_id={capId}
+                          moduleName="allowlist"
+                        />
+                      </div>
+                    }
+                  />
+                  <Route path="/admin/allowlists" element={<AllAllowlist />} />
+                  <Route
+                    path="/view/allowlist/:id"
+                    element={<Feeds suiAddress={currentAccount.address} />}
+                  />
+                </Routes>
+              }
+            />
+            <Route
+              path="/subscription-example/*"
+              element={
+                <Routes>
+                  <Route path="/" element={<CreateService />} />
+                  <Route
+                    path="/admin/service/:id"
+                    element={
+                      <div>
+                        <Service
+                          setRecipientAllowlist={setRecipientAllowlist}
+                          setCapId={setCapId}
+                        />
+                        <WalrusUpload
+                          policyObject={recipientAllowlist}
+                          cap_id={capId}
+                          moduleName="subscription"
+                        />
+                      </div>
+                    }
+                  />
+                  <Route path="/admin/services" element={<AllServices />} />
+                  <Route
+                    path="/view/service/:id"
+                    element={<FeedsToSubscribe suiAddress={currentAccount.address} />}
+                  />
+                </Routes>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      ) : (
+        <p>Please connect your wallet to continue</p>
+      )}
+    </Container>
   );
-}
 
 export default App;

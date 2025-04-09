@@ -60,7 +60,9 @@ function App() {
       <Flex justify="between" align="center" mb="5">
         <Flex align="center" gap="3">
           <img src="/FakeAirdropX.png" alt="FakeAirdropX Logo" style={{ height: 48 }} />
-          <Text size="5" weight="bold" color="gray">SealSui Testnet By FakeAirdropX</Text>
+          <Text size="5" weight="bold" color="gray">
+            SealSui Testnet By FakeAirdropX
+          </Text>
         </Flex>
         <Box>
           <ConnectButton />
@@ -138,7 +140,7 @@ function App() {
 
       <Flex mt="8" justify="center" gap="4">
         <a href="https://t.me/FakeAirdropX" target="_blank" rel="noopener noreferrer">
-          <img src="/Telegram_logo.svg" alt="Telegram" style={{ height: 28 }} />
+          <img src="/telegram-icon.svg" alt="Telegram" style={{ height: 28 }} />
         </a>
         <a href="https://x.com/FakeAirdropX" target="_blank" rel="noopener noreferrer">
           <img src="/x-icon.svg" alt="X" style={{ height: 24 }} />

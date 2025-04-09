@@ -1,9 +1,14 @@
-// Copyright (c), Mysten Labs, Inc.
-// SPDX-License-Identifier: Apache-2.0
-
 import React, { useState } from 'react';
 import { ConnectButton, useCurrentAccount } from '@mysten/dapp-kit';
-import { Box, Button, Card, Container, Flex, Grid, Text } from '@radix-ui/themes';
+import {
+  Box,
+  Button,
+  Card,
+  Container,
+  Flex,
+  Grid,
+  Text,
+} from '@radix-ui/themes';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { CreateAllowlist } from './CreateAllowlist';
 import { Allowlist } from './Allowlist';
@@ -56,11 +61,24 @@ function App() {
   const [capId, setCapId] = useState<string>('');
 
   return (
-    <Container size="3" px="4" py="4">
+    <Container
+      size="3"
+      px="4"
+      py="4"
+      style={{
+        backgroundColor: '#f9f9f9',
+        color: '#000',
+        minHeight: '100vh',
+      }}
+    >
       <Flex justify="between" align="center" mb="5">
         <Flex align="center" gap="3">
-          <img src="/FakeAirdropX.png" alt="FakeAirdropX Logo" style={{ height: 48 }} />
-          <Text size="5" weight="bold" color="gray">
+          <img
+            src="/FakeAirdropX.png"
+            alt="FakeAirdropX Logo"
+            style={{ height: 64 }}
+          />
+          <Text size="6" weight="bold" color="gray">
             SealSui Testnet By FakeAirdropX
           </Text>
         </Flex>
@@ -69,10 +87,18 @@ function App() {
         </Box>
       </Flex>
 
-      <Card mb="4" size="2">
+      <Card mb="4" size="2" style={{ backgroundColor: '#fff' }}>
         <Text size="2">
           This app demonstrates Seal Sui features. Make sure you're on Testnet and funded from
-          <a href="https://faucet.sui.io/" target="_blank" rel="noopener noreferrer"> faucet.sui.io</a>.
+          <a
+            href="https://faucet.sui.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#4e8af7', marginLeft: 4 }}
+          >
+            faucet.sui.io
+          </a>
+          .
         </Text>
       </Card>
 
@@ -89,7 +115,10 @@ function App() {
                     path="/admin/allowlist/:id"
                     element={
                       <div>
-                        <Allowlist setRecipientAllowlist={setRecipientAllowlist} setCapId={setCapId} />
+                        <Allowlist
+                          setRecipientAllowlist={setRecipientAllowlist}
+                          setCapId={setCapId}
+                        />
                         <WalrusUpload
                           policyObject={recipientAllowlist}
                           cap_id={capId}
@@ -115,7 +144,10 @@ function App() {
                     path="/admin/service/:id"
                     element={
                       <div>
-                        <Service setRecipientAllowlist={setRecipientAllowlist} setCapId={setCapId} />
+                        <Service
+                          setRecipientAllowlist={setRecipientAllowlist}
+                          setCapId={setCapId}
+                        />
                         <WalrusUpload
                           policyObject={recipientAllowlist}
                           cap_id={capId}
@@ -127,7 +159,9 @@ function App() {
                   <Route path="/admin/services" element={<AllServices />} />
                   <Route
                     path="/view/service/:id"
-                    element={<FeedsToSubscribe suiAddress={currentAccount.address} />}
+                    element={
+                      <FeedsToSubscribe suiAddress={currentAccount.address} />
+                    }
                   />
                 </Routes>
               }
@@ -135,15 +169,25 @@ function App() {
           </Routes>
         </BrowserRouter>
       ) : (
-        <Text align="center" mt="6">Please connect your wallet to continue</Text>
+        <Text align="center" mt="6">
+          Please connect your wallet to continue
+        </Text>
       )}
 
-      <Flex mt="8" justify="center" gap="4">
-        <a href="https://t.me/FakeAirdropX" target="_blank" rel="noopener noreferrer">
-          <img src="/telegram-icon.svg" alt="Telegram" style={{ height: 28 }} />
+      <Flex mt="10" justify="center" gap="6">
+        <a
+          href="https://t.me/FakeAirdropX"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="/telegram-icon.svg" alt="Telegram" style={{ height: 32 }} />
         </a>
-        <a href="https://x.com/FakeAirdropX" target="_blank" rel="noopener noreferrer">
-          <img src="/x-icon.svg" alt="X" style={{ height: 24 }} />
+        <a
+          href="https://x.com/FakeAirdropX"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src="/x-icon.svg" alt="X" style={{ height: 28 }} />
         </a>
       </Flex>
     </Container>

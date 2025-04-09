@@ -1,196 +1,92 @@
-import React, { useState } from 'react';
-import { ConnectButton, useCurrentAccount } from '@mysten/dapp-kit';
-import {
-  Box,
-  Button,
-  Card,
-  Container,
-  Flex,
-  Grid,
-  Text,
-} from '@radix-ui/themes';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { CreateAllowlist } from './CreateAllowlist';
-import { Allowlist } from './Allowlist';
-import WalrusUpload from './EncryptAndUpload';
-import { CreateService } from './CreateSubscriptionService';
-import FeedsToSubscribe from './SubscriptionView';
-import { Service } from './SubscriptionService';
-import { AllAllowlist } from './OwnedAllowlists';
-import { AllServices } from './OwnedSubscriptionServices';
-import Feeds from './AllowlistView';
-
-function LandingPage() {
-  return (
-    <Grid columns={{ initial: '1', md: '2' }} gap="4">
-      <Card size="3">
-        <Flex direction="column" gap="4" align="center" justify="between">
-          <div style={{ textAlign: 'center' }}>
-            <h2>Allowlist Example</h2>
-            <p>
-              Creators define an allowlist-based access to encrypted files. Only users in the list
-              can decrypt them.
-            </p>
-          </div>
-          <Link to="/allowlist-example">
-            <Button size="3">Try it</Button>
-          </Link>
-        </Flex>
-      </Card>
-      <Card size="3">
-        <Flex direction="column" gap="4" align="center" justify="between">
-          <div style={{ textAlign: 'center' }}>
-            <h2>Subscription Example</h2>
-            <p>
-              Define a subscription-based access with TTL. Users with valid subscriptions can decrypt
-              the files.
-            </p>
-          </div>
-          <Link to="/subscription-example">
-            <Button size="3">Try it</Button>
-          </Link>
-        </Flex>
-      </Card>
-    </Grid>
-  );
-}
+import React from "react";
+import { ConnectButton, useCurrentAccount } from "@mysten/dapp-kit";
+import { Box, Card, Container, Flex, Text } from "@radix-ui/themes";
 
 function App() {
   const currentAccount = useCurrentAccount();
-  const [recipientAllowlist, setRecipientAllowlist] = useState<string>('');
-  const [capId, setCapId] = useState<string>('');
 
   return (
-    <Container
-      size="3"
-      px="4"
-      py="4"
+    <div
       style={{
-        backgroundColor: '#f9f9f9',
-        color: '#000',
-        minHeight: '100vh',
+        backgroundColor: "#ffffff",
+        color: "#000000",
+        minHeight: "100vh",
       }}
     >
-      <Flex justify="between" align="center" mb="5">
-        <Flex align="center" gap="3">
-          <img
-            src="/FakeAirdropX.png"
-            alt="FakeAirdropX Logo"
-            style={{ height: 64 }}
-          />
-          <Text size="6" weight="bold" color="gray">
-            SealSui Testnet By FakeAirdropX
-          </Text>
+      <Container size="3" px="4" py="4">
+        {/* Header */}
+        <Flex justify="between" align="center" mb="6">
+          <Flex align="center" gap="4">
+            <img
+              src="/FakeAirdropX.png"
+              alt="FakeAirdropX Logo"
+              style={{ width: 120 }}
+            />
+            <Text size="6" weight="bold">
+              SealSui Testnet By FakeAirdropX
+            </Text>
+          </Flex>
+          <Box>
+            <ConnectButton />
+          </Box>
         </Flex>
-        <Box>
-          <ConnectButton />
-        </Box>
-      </Flex>
 
-      <Card mb="4" size="2" style={{ backgroundColor: '#fff' }}>
-        <Text size="2">
-          This app demonstrates Seal Sui features. Make sure you're on Testnet and funded from
-          <a
-            href="https://faucet.sui.io/"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: '#4e8af7', marginLeft: 4 }}
+        {/* Main Logo & Community Team Section */}
+        <Card
+          size="3"
+          style={{
+            backgroundColor: "#f9f9f9",
+            textAlign: "center",
+            padding: "2rem",
+          }}
+        >
+          {/* Big Centered Logo */}
+          <Flex justify="center" mb="4">
+            <img
+              src="/FakeAirdropX.png"
+              alt="Main Logo"
+              style={{ width: 200 }}
+            />
+          </Flex>
+
+          {/* Community Team Section */}
+          <Text
+            size="4"
+            weight="bold"
+            style={{
+              borderBottom: "2px solid black",
+              paddingBottom: "10px",
+              display: "inline-block",
+              marginBottom: "1rem",
+            }}
           >
-            faucet.sui.io
-          </a>
-          .
-        </Text>
-      </Card>
+            Community Team
+          </Text>
 
-      {currentAccount ? (
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route
-              path="/allowlist-example/*"
-              element={
-                <Routes>
-                  <Route path="/" element={<CreateAllowlist />} />
-                  <Route
-                    path="/admin/allowlist/:id"
-                    element={
-                      <div>
-                        <Allowlist
-                          setRecipientAllowlist={setRecipientAllowlist}
-                          setCapId={setCapId}
-                        />
-                        <WalrusUpload
-                          policyObject={recipientAllowlist}
-                          cap_id={capId}
-                          moduleName="allowlist"
-                        />
-                      </div>
-                    }
-                  />
-                  <Route path="/admin/allowlists" element={<AllAllowlist />} />
-                  <Route
-                    path="/view/allowlist/:id"
-                    element={<Feeds suiAddress={currentAccount.address} />}
-                  />
-                </Routes>
-              }
-            />
-            <Route
-              path="/subscription-example/*"
-              element={
-                <Routes>
-                  <Route path="/" element={<CreateService />} />
-                  <Route
-                    path="/admin/service/:id"
-                    element={
-                      <div>
-                        <Service
-                          setRecipientAllowlist={setRecipientAllowlist}
-                          setCapId={setCapId}
-                        />
-                        <WalrusUpload
-                          policyObject={recipientAllowlist}
-                          cap_id={capId}
-                          moduleName="subscription"
-                        />
-                      </div>
-                    }
-                  />
-                  <Route path="/admin/services" element={<AllServices />} />
-                  <Route
-                    path="/view/service/:id"
-                    element={
-                      <FeedsToSubscribe suiAddress={currentAccount.address} />
-                    }
-                  />
-                </Routes>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
-      ) : (
+          <Flex justify="center" gap="4" mt="4">
+            <a
+              href="https://t.me/FakeAirdropX"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src="/telegram-icon.svg" alt="Telegram" width={50} />
+            </a>
+            <a
+              href="https://x.com/FakeAirdropX"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src="/x-icon.svg" alt="X" width={50} />
+            </a>
+          </Flex>
+        </Card>
+
+        {/* Wallet prompt */}
         <Text align="center" mt="6">
-          Please connect your wallet to continue
+          Please connect your Sui wallet to continue
         </Text>
-      )}
-
-      <Flex mt="10" justify="center" gap="6">
-        <a
-          href="https://t.me/FakeAirdropX"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="/telegram-icon.svg" alt="Telegram" style={{ height: 32 }} />
-        </a>
-        <a
-          href="https://x.com/FakeAirdropX"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="/x-icon.svg" alt="X" style={{ height: 28 }} />
-        </a>
-      </Flex>
-    </Container>
+      </Container>
+    </div>
   );
 }
 

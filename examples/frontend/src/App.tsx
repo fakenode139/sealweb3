@@ -1,33 +1,30 @@
 // Copyright (c), Mysten Labs, Inc.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useState } from 'react';
 import { ConnectButton, useCurrentAccount } from '@mysten/dapp-kit';
-import { Box, Button, Card, Container, Flex, Grid } from '@radix-ui/themes';
+import { Box, Button, Card, Container, Flex, Grid, Text } from '@radix-ui/themes';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { CreateAllowlist } from './CreateAllowlist';
 import { Allowlist } from './Allowlist';
 import WalrusUpload from './EncryptAndUpload';
-import { useState } from 'react';
 import { CreateService } from './CreateSubscriptionService';
 import FeedsToSubscribe from './SubscriptionView';
 import { Service } from './SubscriptionService';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { AllAllowlist } from './OwnedAllowlists';
 import { AllServices } from './OwnedSubscriptionServices';
 import Feeds from './AllowlistView';
 
 function LandingPage() {
   return (
-    <Grid columns="2" gap="4">
-      <Card>
-        <Flex direction="column" gap="2" align="center" style={{ height: '100%' }}>
+    <Grid columns={{ initial: '1', md: '2' }} gap="4">
+      <Card size="3">
+        <Flex direction="column" gap="4" align="center" justify="between">
           <div style={{ textAlign: 'center' }}>
             <h2>Allowlist Example</h2>
             <p>
-              Shows how a creator can define an allowlist based access. The creator first creates an
-              allowlist and can add or remove users in the list. The creator can then associate
-              encrypted files to the allowlist. Only users in the allowlist have access to decrypt
-              the files.
+              Creators define an allowlist-based access to encrypted files. Only users in the list
+              can decrypt them.
             </p>
           </div>
           <Link to="/allowlist-example">
@@ -35,17 +32,13 @@ function LandingPage() {
           </Link>
         </Flex>
       </Card>
-      <Card>
-        <Flex direction="column" gap="2" align="center" style={{ height: '100%' }}>
+      <Card size="3">
+        <Flex direction="column" gap="4" align="center" justify="between">
           <div style={{ textAlign: 'center' }}>
             <h2>Subscription Example</h2>
             <p>
-              Shows how a creator can define a subscription based access to its published files. The
-              creator defines subcription fee and how long a subscription is valid for. The creator
-              can then associate encrypted files to the service. Only users who have purchased a
-              subscription (NFT) have access to decrypt the files, along with the condition that the
-              subscription must not have expired (i.e. the subscription creation timestamp plus the
-              TTL is smaller than the current clock time).
+              Define a subscription-based access with TTL. Users with valid subscriptions can decrypt
+              the files.
             </p>
           </div>
           <Link to="/subscription-example">
@@ -61,33 +54,26 @@ function App() {
   const currentAccount = useCurrentAccount();
   const [recipientAllowlist, setRecipientAllowlist] = useState<string>('');
   const [capId, setCapId] = useState<string>('');
+
   return (
-    <Container>
-      <Flex position="sticky" px="4" py="2" justify="between">
-        <h1 className="text-4xl font-bold m-4 mb-8">Seal Example Apps</h1>
-        {/* <p>TODO: add seal logo</p> */}
+    <Container size="3" px="4" py="4">
+      <Flex justify="between" align="center" mb="5">
+        <Flex align="center" gap="3">
+          <img src="/FakeAirdropX.png" alt="FakeAirdropX Logo" style={{ height: 48 }} />
+          <Text size="5" weight="bold" color="gray">SealSui Testnet By FakeAirdropX</Text>
+        </Flex>
         <Box>
           <ConnectButton />
         </Box>
       </Flex>
-      <Card style={{ marginBottom: '2rem' }}>
-        <p>
-          1. Code is available{' '}
-          <a href="https://github.com/MystenLabs/seal/tree/main/examples">here</a>.
-        </p>
-        <p>
-          2. These examples are for Testnet only. Make sure you wallet is set to Testnet and has
-          some balance (can request from <a href="https://faucet.sui.io/">faucet.sui.io</a>).
-        </p>
-        <p>
-          3. Blobs are only stored on Walrus Testnet for 1 epoch by default, older files cannot be
-          retrieved even if you have access.
-        </p>
-        <p>
-          4. Currently only image files are supported, and the UI is minimal, designed for demo
-          purposes only!
-        </p>
+
+      <Card mb="4" size="2">
+        <Text size="2">
+          This app demonstrates Seal Sui features. Make sure you're on Testnet and funded from
+          <a href="https://faucet.sui.io/" target="_blank" rel="noopener noreferrer"> faucet.sui.io</a>.
+        </Text>
       </Card>
+
       {currentAccount ? (
         <BrowserRouter>
           <Routes>
@@ -101,10 +87,7 @@ function App() {
                     path="/admin/allowlist/:id"
                     element={
                       <div>
-                        <Allowlist
-                          setRecipientAllowlist={setRecipientAllowlist}
-                          setCapId={setCapId}
-                        />
+                        <Allowlist setRecipientAllowlist={setRecipientAllowlist} setCapId={setCapId} />
                         <WalrusUpload
                           policyObject={recipientAllowlist}
                           cap_id={capId}
@@ -130,10 +113,7 @@ function App() {
                     path="/admin/service/:id"
                     element={
                       <div>
-                        <Service
-                          setRecipientAllowlist={setRecipientAllowlist}
-                          setCapId={setCapId}
-                        />
+                        <Service setRecipientAllowlist={setRecipientAllowlist} setCapId={setCapId} />
                         <WalrusUpload
                           policyObject={recipientAllowlist}
                           cap_id={capId}
@@ -153,8 +133,17 @@ function App() {
           </Routes>
         </BrowserRouter>
       ) : (
-        <p>Please connect your wallet to continue</p>
+        <Text align="center" mt="6">Please connect your wallet to continue</Text>
       )}
+
+      <Flex mt="8" justify="center" gap="4">
+        <a href="https://t.me/FakeAirdropX" target="_blank" rel="noopener noreferrer">
+          <img src="/Telegram_logo.svg" alt="Telegram" style={{ height: 28 }} />
+        </a>
+        <a href="https://x.com/FakeAirdropX" target="_blank" rel="noopener noreferrer">
+          <img src="/x-icon.svg" alt="X" style={{ height: 24 }} />
+        </a>
+      </Flex>
     </Container>
   );
 }

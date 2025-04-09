@@ -70,24 +70,27 @@ function App() {
           <ConnectButton />
         </Box>
       </Flex>
-      <Card style={{ marginBottom: '2rem' }}>
-        <p>
-          1. Code is available{' '}
-          <a href="https://github.com/MystenLabs/seal/tree/main/examples">here</a>.
-        </p>
-        <p>
-          2. These examples are for Testnet only. Make sure you wallet is set to Testnet and has
-          some balance (can request from <a href="https://faucet.sui.io/">faucet.sui.io</a>).
-        </p>
-        <p>
-          3. Blobs are only stored on Walrus Testnet for 1 epoch by default, older files cannot be
-          retrieved even if you have access.
-        </p>
-        <p>
-          4. Currently only image files are supported, and the UI is minimal, designed for demo
-          purposes only!
-        </p>
-      </Card>
+      <Card style={{ marginBottom: '2rem', textAlign: 'center' }}>
+  <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem' }}>
+    SealSui Testnet By FakeAirdropX
+  </h1>
+  <img
+    src="/FakeAirdropX.png"
+    alt="Logo"
+    style={{ width: '120px', height: '120px', margin: '0 auto 1rem' }}
+  />
+  <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
+    Community Team
+  </h2>
+  <Flex justify="center" gap="4" mb="4">
+    <a href="https://t.me/FakeAirdropX" target="_blank" rel="noopener noreferrer">
+      <img src="/telegram-icon.svg" alt="Telegram" style={{ width: '36px' }} />
+    </a>
+    <a href="https://x.com/FakeAirdropX" target="_blank" rel="noopener noreferrer">
+      <img src="/x-icon.svg" alt="X" style={{ width: '36px' }} />
+    </a>
+  </Flex>
+</Card>
       {currentAccount ? (
         <BrowserRouter>
           <Routes>

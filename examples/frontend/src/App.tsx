@@ -41,10 +41,11 @@ function LandingPage() {
             <h2>Subscription Example</h2>
             <p>
               Shows how a creator can define a subscription based access to its published files. The
-              creator defines subcription fee and how long a subscription is valid for. The creator
+              creator defines subscription fee and how long a subscription is valid for. The creator
               can then associate encrypted files to the service. Only users who have purchased a
               subscription (NFT) have access to decrypt the files, along with the condition that the
-              subscription must not have expired.
+              subscription must not have expired (i.e. the subscription creation timestamp plus the
+              TTL is smaller than the current clock time).
             </p>
           </div>
           <Link to="/subscription-example">
@@ -62,106 +63,101 @@ function App() {
   const [capId, setCapId] = useState<string>('');
 
   return (
-    <div style={{ backgroundColor: '#ffffff', minHeight: '100vh' }}>
-      <Container>
-        <Flex position="sticky" px="4" py="2" justify="between">
-          <h1 className="text-4xl font-bold m-4 mb-8">Seal Example Apps</h1>
-          <Box>
-            <ConnectButton />
-          </Box>
+    <Container style={{ color: '#000' }}>
+      <Flex position="sticky" px="4" py="2" justify="between">
+        <h1 className="text-4xl font-bold m-4 mb-8">SealSui Testnet By FakeAirdropX</h1>
+        <Box>
+          <ConnectButton />
+        </Box>
+      </Flex>
+
+      <Card style={{ marginBottom: '2rem', textAlign: 'center' }}>
+        <img
+          src="/FakeAirdropX.png"
+          alt="Logo"
+          style={{ width: '120px', height: '120px', margin: '0 auto 1rem' }}
+        />
+        <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
+          Community Team
+        </h2>
+        <Flex justify="center" gap="4" mb="4">
+          <a href="https://t.me/FakeAirdropX" target="_blank" rel="noopener noreferrer">
+            <img src="/telegram-icon.svg" alt="Telegram" style={{ width: '36px' }} />
+          </a>
+          <a href="https://x.com/FakeAirdropX" target="_blank" rel="noopener noreferrer">
+            <img src="/x-icon.svg" alt="X" style={{ width: '36px' }} />
+          </a>
         </Flex>
+      </Card>
 
-        <Card style={{ marginBottom: '2rem', textAlign: 'center' }}>
-          <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem' }}>
-            SealSui Testnet By FakeAirdropX
-          </h1>
-          <img
-            src="/FakeAirdropX.png"
-            alt="Logo"
-            style={{ width: '120px', height: '120px', margin: '0 auto 1rem' }}
-          />
-          <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
-            Community Team
-          </h2>
-          <Flex justify="center" gap="4" mb="4">
-            <a href="https://t.me/FakeAirdropX" target="_blank" rel="noopener noreferrer">
-              <img src="/telegram-icon.svg" alt="Telegram" style={{ width: '36px' }} />
-            </a>
-            <a href="https://x.com/FakeAirdropX" target="_blank" rel="noopener noreferrer">
-              <img src="/x-icon.svg" alt="X" style={{ width: '36px' }} />
-            </a>
-          </Flex>
-        </Card>
-
-        {currentAccount ? (
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route
-                path="/allowlist-example/*"
-                element={
-                  <Routes>
-                    <Route path="/" element={<CreateAllowlist />} />
-                    <Route
-                      path="/admin/allowlist/:id"
-                      element={
-                        <div>
-                          <Allowlist
-                            setRecipientAllowlist={setRecipientAllowlist}
-                            setCapId={setCapId}
-                          />
-                          <WalrusUpload
-                            policyObject={recipientAllowlist}
-                            cap_id={capId}
-                            moduleName="allowlist"
-                          />
-                        </div>
-                      }
-                    />
-                    <Route path="/admin/allowlists" element={<AllAllowlist />} />
-                    <Route
-                      path="/view/allowlist/:id"
-                      element={<Feeds suiAddress={currentAccount.address} />}
-                    />
-                  </Routes>
-                }
-              />
-              <Route
-                path="/subscription-example/*"
-                element={
-                  <Routes>
-                    <Route path="/" element={<CreateService />} />
-                    <Route
-                      path="/admin/service/:id"
-                      element={
-                        <div>
-                          <Service
-                            setRecipientAllowlist={setRecipientAllowlist}
-                            setCapId={setCapId}
-                          />
-                          <WalrusUpload
-                            policyObject={recipientAllowlist}
-                            cap_id={capId}
-                            moduleName="subscription"
-                          />
-                        </div>
-                      }
-                    />
-                    <Route path="/admin/services" element={<AllServices />} />
-                    <Route
-                      path="/view/service/:id"
-                      element={<FeedsToSubscribe suiAddress={currentAccount.address} />}
-                    />
-                  </Routes>
-                }
-              />
-            </Routes>
-          </BrowserRouter>
-        ) : (
-          <p>Please connect your wallet to continue</p>
-        )}
-      </Container>
-    </div>
+      {currentAccount ? (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/allowlist-example/*"
+              element={
+                <Routes>
+                  <Route path="/" element={<CreateAllowlist />} />
+                  <Route
+                    path="/admin/allowlist/:id"
+                    element={
+                      <div>
+                        <Allowlist
+                          setRecipientAllowlist={setRecipientAllowlist}
+                          setCapId={setCapId}
+                        />
+                        <WalrusUpload
+                          policyObject={recipientAllowlist}
+                          cap_id={capId}
+                          moduleName="allowlist"
+                        />
+                      </div>
+                    }
+                  />
+                  <Route path="/admin/allowlists" element={<AllAllowlist />} />
+                  <Route
+                    path="/view/allowlist/:id"
+                    element={<Feeds suiAddress={currentAccount.address} />}
+                  />
+                </Routes>
+              }
+            />
+            <Route
+              path="/subscription-example/*"
+              element={
+                <Routes>
+                  <Route path="/" element={<CreateService />} />
+                  <Route
+                    path="/admin/service/:id"
+                    element={
+                      <div>
+                        <Service
+                          setRecipientAllowlist={setRecipientAllowlist}
+                          setCapId={setCapId}
+                        />
+                        <WalrusUpload
+                          policyObject={recipientAllowlist}
+                          cap_id={capId}
+                          moduleName="subscription"
+                        />
+                      </div>
+                    }
+                  />
+                  <Route path="/admin/services" element={<AllServices />} />
+                  <Route
+                    path="/view/service/:id"
+                    element={<FeedsToSubscribe suiAddress={currentAccount.address} />}
+                  />
+                </Routes>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      ) : (
+        <p>Please connect your wallet to continue</p>
+      )}
+    </Container>
   );
 }
 

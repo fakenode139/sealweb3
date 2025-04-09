@@ -74,7 +74,7 @@ function App() {
         <img
           src="/FakeAirdropX.png"
           alt="Logo"
-          style={{ width: '120px', height: '120px', margin: '0 auto 1rem' }}
+          style={{ maxWidth: '250px', height: 'auto', margin: '0 auto 1rem' }}
         />
         <h2 style={{ fontSize: '1.25rem', fontWeight: '600', marginBottom: '1rem' }}>
           Community Team

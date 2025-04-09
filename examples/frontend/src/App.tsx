@@ -21,7 +21,7 @@ function LandingPage() {
     <Grid columns="2" gap="4">
       <Card>
         <Flex direction="column" gap="2" align="center" style={{ height: '100%' }}>
-          <div style={{ textAlign: 'center' }}>
+          <div style={{ textAlign: 'center', color: '#000' }}>
             <h2>Allowlist Example</h2>
             <p>
               Shows how a creator can define an allowlist based access. The creator first creates an
@@ -37,15 +37,14 @@ function LandingPage() {
       </Card>
       <Card>
         <Flex direction="column" gap="2" align="center" style={{ height: '100%' }}>
-          <div style={{ textAlign: 'center' }}>
+          <div style={{ textAlign: 'center', color: '#000' }}>
             <h2>Subscription Example</h2>
             <p>
               Shows how a creator can define a subscription based access to its published files. The
               creator defines subscription fee and how long a subscription is valid for. The creator
               can then associate encrypted files to the service. Only users who have purchased a
               subscription (NFT) have access to decrypt the files, along with the condition that the
-              subscription must not have expired (i.e. the subscription creation timestamp plus the
-              TTL is smaller than the current clock time).
+              subscription must not have expired.
             </p>
           </div>
           <Link to="/subscription-example">
@@ -63,7 +62,7 @@ function App() {
   const [capId, setCapId] = useState<string>('');
 
   return (
-    <Container style={{ color: '#000' }}>
+    <Container style={{ backgroundColor: '#fff', color: '#000', minHeight: '100vh' }}>
       <Flex position="sticky" px="4" py="2" justify="between">
         <h1 className="text-4xl font-bold m-4 mb-8">SealSui Testnet By FakeAirdropX</h1>
         <Box>
@@ -71,7 +70,7 @@ function App() {
         </Box>
       </Flex>
 
-      <Card style={{ marginBottom: '2rem', textAlign: 'center' }}>
+      <Card style={{ marginBottom: '2rem', textAlign: 'center', backgroundColor: '#fff', color: '#000' }}>
         <img
           src="/FakeAirdropX.png"
           alt="Logo"
@@ -155,7 +154,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       ) : (
-        <p>Please connect your wallet to continue</p>
+        <p style={{ textAlign: 'center', fontWeight: 'bold' }}>Please connect your wallet to continue</p>
       )}
     </Container>
   );
